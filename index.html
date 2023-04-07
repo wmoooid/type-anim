@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="heading-container">
+      <p class="first-row">Get <span class="typed-text-1"></span><span class="cursor-1">&nbsp;</span></p>
+      <p class="second-row">for <span class="typed-text-2"></span><span class="cursor-2">&nbsp;</span></p>
+    </div>
+    <style>
+      .heading-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .first-row,
+      .second-row {
+        font-family: 'Sora';
+        font-size: 5.5rem;
+        line-height: 1.2;
+        margin: 0;
+        font-weight: 300;
+        letter-spacing: -0.3rem;
+        text-align: center;
+        overflow: hidden;
+      }
+      .second-row {
+        font-weight: 600;
+      }
+      .typed-text {
+        font-weight: 300;
+      }
+      .cursor-1,
+      .cursor-2 {
+        display: inline-block;
+        background-color: #ccc;
+        margin-left: 0.1rem;
+        width: 3px;
+        animation: blink 1s infinite;
+      }
+      .cursor.typing {
+        animation: none;
+      }
+      @keyframes blink {
+        0% {
+          background-color: #ccc;
+        }
+        49% {
+          background-color: #ccc;
+        }
+        50% {
+          background-color: transparent;
+        }
+        99% {
+          background-color: transparent;
+        }
+        100% {
+          background-color: #ccc;
+        }
+      }
+    </style>
+    <script>
+      const typedTextSpan1 = document.querySelector('.typed-text-1');
+      const typedTextSpan2 = document.querySelector('.typed-text-2');
+      const cursorSpan1 = document.querySelector('.cursor-1');
+      const cursorSpan2 = document.querySelector('.cursor-2');
+
+      const textArray1 = [
+        'boosted sales',
+        'skyrocketing leads',
+        'increased conversions',
+        'more deals',
+        'sales growth',
+        'multiplied leads',
+        'optimized conversion rates',
+        'more closed deals',
+        'accelerated sales performance',
+        'high-quality leads',
+      ];
+      const textArray2 = [
+        'expert marketing',
+        'proven strategies',
+        'high-performing landing pages',
+        'targeted campaigns',
+        'customized solutions',
+        'cutting-edge techniques',
+        'expertly designed landing pages',
+        'strategic marketing',
+        'industry-specific approaches',
+        'innovative marketing tactics',
+      ];
+      const typingDelay = 200;
+      const erasingDelay = 100;
+      const newTextDelay = 2000; // Delay between current and next text
+
+      startType(typedTextSpan1, textArray1, cursorSpan1);
+      startType(typedTextSpan2, textArray2, cursorSpan2);
+
+      function startType(typedTextSpan, textArray, cursorSpan) {
+        let textArrayIndex = 0;
+        let charIndex = 0;
+
+        function type() {
+          if (charIndex < textArray[textArrayIndex].length) {
+            if (!cursorSpan.classList.contains('typing')) cursorSpan.classList.add('typing');
+            typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(type, typingDelay);
+          } else {
+            cursorSpan.classList.remove('typing');
+            setTimeout(erase, newTextDelay);
+          }
+        }
+
+        function erase() {
+          if (charIndex > 0) {
+            if (!cursorSpan.classList.contains('typing')) cursorSpan.classList.add('typing');
+            typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
+            charIndex--;
+            setTimeout(erase, erasingDelay);
+          } else {
+            cursorSpan.classList.remove('typing');
+            textArrayIndex++;
+            if (textArrayIndex >= textArray.length) textArrayIndex = 0;
+            setTimeout(type, typingDelay + 1100);
+          }
+        }
+
+        if (textArray.length) setTimeout(type, newTextDelay + 250);
+      }
+    </script>
+  </body>
+</html>

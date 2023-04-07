@@ -1,0 +1,168 @@
+<div class="heading-container">
+  <p class="first-row">Get <span class="typed-text-1"></span><span class="cursor-1">&nbsp;</span></p>
+  <p class="second-row">for <span class="typed-text-2"></span><span class="cursor-2">&nbsp;</span></p>
+</div>
+<style>
+  .heading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .first-row,
+  .second-row {
+    font-family: 'Sora';
+    font-size: 5rem;
+    line-height: 1.2;
+    margin: 0;
+    font-weight: 300;
+    letter-spacing: -0.3rem;
+    text-align: center;
+    overflow: hidden;
+  }
+  .second-row {
+    font-weight: 600;
+  }
+  .typed-text-1,
+  .typed-text-2 {
+    letter-spacing: -0.4rem;
+  }
+  .cursor-1,
+  .cursor-2 {
+    display: inline-block;
+    background-color: #ccc;
+    margin-left: 0.1rem;
+    width: 3px;
+    animation: blink 1s infinite;
+  }
+  .cursor.typing {
+    animation: none;
+  }
+  @keyframes blink {
+    0% {
+      background-color: #ccc;
+    }
+    49% {
+      background-color: #ccc;
+    }
+    50% {
+      background-color: transparent;
+    }
+    99% {
+      background-color: transparent;
+    }
+    100% {
+      background-color: #ccc;
+    }
+  }
+
+  @media screen and (max-width: 1200px) {
+    .first-row,
+    .second-row {
+      font-size: 4rem;
+    }
+  }
+
+  @media screen and (max-width: 960px) {
+    .first-row,
+    .second-row {
+      font-size: 4rem;
+    }
+
+    .typed-text-1,
+    .typed-text-2 {
+      letter-spacing: -0.2rem;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .first-row,
+    .second-row {
+      font-size: 3.5rem;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .first-row,
+    .second-row {
+      font-size: 2.2rem;
+      letter-spacing: -0.1rem;
+    }
+
+    .typed-text-1,
+    .typed-text-2 {
+      letter-spacing: -0.1rem;
+    }
+  }
+</style>
+<script>
+  const typedTextSpan1 = document.querySelector('.typed-text-1');
+  const typedTextSpan2 = document.querySelector('.typed-text-2');
+  const cursorSpan1 = document.querySelector('.cursor-1');
+  const cursorSpan2 = document.querySelector('.cursor-2');
+
+  const textArray1 = [
+    'boosted sales',
+    'skyrocketing leads',
+    'more deals',
+    'sales growth',
+    'multiplied leads',
+    'more closed deals',
+    'high-quality leads',
+  ];
+  const textArray2 = [
+    'expert marketing',
+    'proven strategies',
+    'targeted campaigns',
+    'customized solutions',
+    'cutting-edge techniques',
+    'strategic marketing',
+    'innovative marketing tactics',
+  ];
+  const typingDelay = 200;
+  const erasingDelay = 100;
+  const newTextDelay = 2000; // Delay between current and next text
+
+  let textArrayIndex1 = 0;
+  let charIndex1 = 0;
+  let textArrayIndex2 = 0;
+  let charIndex2 = 0;
+
+  function type() {
+    if (charIndex1 < textArray1[textArrayIndex1].length || charIndex2 < textArray2[textArrayIndex2].length) {
+      if (!cursorSpan1.classList.contains('typing')) cursorSpan1.classList.add('typing');
+      if (!cursorSpan2.classList.contains('typing')) cursorSpan2.classList.add('typing');
+      typedTextSpan1.textContent += textArray1[textArrayIndex1].charAt(charIndex1);
+      typedTextSpan2.textContent += textArray2[textArrayIndex2].charAt(charIndex2);
+      charIndex1++;
+      charIndex2++;
+      setTimeout(type, typingDelay);
+    } else {
+      cursorSpan1.classList.remove('typing');
+      cursorSpan2.classList.remove('typing');
+      setTimeout(erase, newTextDelay);
+    }
+  }
+
+  function erase() {
+    if (charIndex1 > 0 || charIndex2 > 0) {
+      if (!cursorSpan1.classList.contains('typing')) cursorSpan1.classList.add('typing');
+      if (!cursorSpan2.classList.contains('typing')) cursorSpan2.classList.add('typing');
+      typedTextSpan1.textContent = textArray1[textArrayIndex1].substring(0, charIndex1 - 1);
+      typedTextSpan2.textContent = textArray2[textArrayIndex2].substring(0, charIndex2 - 1);
+      charIndex1--;
+      charIndex2--;
+      setTimeout(erase, erasingDelay);
+    } else {
+      cursorSpan1.classList.remove('typing');
+      cursorSpan2.classList.remove('typing');
+      textArrayIndex1++;
+      textArrayIndex2++;
+      if (textArrayIndex1 >= textArray1.length) textArrayIndex1 = 0;
+      if (textArrayIndex2 >= textArray2.length) textArrayIndex2 = 0;
+      setTimeout(type, typingDelay + 1100);
+    }
+  }
+
+  if (textArray1.length && textArray2.length) setTimeout(type, newTextDelay + 250);
+</script>
